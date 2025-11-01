@@ -63,15 +63,29 @@ pio.templates["custom_dark"].layout.hoverlabel = dict(
 pio.templates["custom_dark"].layout.update(
     paper_bgcolor="rgba(0,0,0,0)",    # Fondo transparente
     plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(color="#000000", size=13),
+    font=dict(color="#f5f6fa", size=13),
     title_font=dict(color="#f5f6fa", size=16),
     legend=dict(
         bgcolor="rgba(0,0,0,0)",
         bordercolor="rgba(255,255,255,0.1)",
         font=dict(color="#f5f6fa")
     ),
-    xaxis=dict(color="#f5f6fa", gridcolor="rgba(255,255,255,0.1)"),
-    yaxis=dict(color="#f5f6fa", gridcolor="rgba(255,255,255,0.1)")
+
+    hoverlabel=dict(
+        bgcolor="rgba(25,25,25,0.9)",     # fondo del tooltip
+        font=dict(color="#ffffff", size=12),  # texto blanco
+        bordercolor="rgba(255,255,255,0.3)"
+    ),
+    xaxis=dict(
+        color="#f5f6fa",
+        gridcolor="rgba(255,255,255,0.1)",
+        zerolinecolor="rgba(255,255,255,0.2)"
+    ),
+    yaxis=dict(
+        color="#f5f6fa",
+        gridcolor="rgba(255,255,255,0.1)",
+        zerolinecolor="rgba(255,255,255,0.2)"
+    )
 )
 
 # Establecer plantilla por defecto
