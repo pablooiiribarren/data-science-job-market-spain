@@ -121,3 +121,7 @@ pip install -r requirements.txt
 
 # 4️⃣ Ejecutar dashboard
 streamlit run app/streamlit_dashboard.py
+
+
+Proyecto desarrollado como parte de portfolio en Data Science e Inteligencia Artificial (2025).
+Dataset obtenido mediante la API pública de Adzuna.
