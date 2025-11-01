@@ -39,5 +39,6 @@ Thumbs.db
 *.tar.gz
 
 # Model files (if too large)
-models/*.pkl
-models/*.joblib
+!models/salary_predictor.pkl
+!models/scaler.pkl
+!models/model_metadata.json
