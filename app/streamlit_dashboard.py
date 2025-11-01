@@ -16,9 +16,6 @@ import json
 # =========================
 # ⚙️ CONFIGURACIÓN DE LA PÁGINA
 # =========================
-import streamlit as st
-import plotly.io as pio
-
 st.set_page_config(
     page_title="Mercado Laboral Data Science España",
     page_icon="📊",
@@ -27,7 +24,7 @@ st.set_page_config(
 )
 
 # =========================
-# 🎨 CSS PERSONALIZADO (Streamlit)
+# 🎨 CSS BÁSICO
 # =========================
 st.markdown("""
 <style>
@@ -46,71 +43,21 @@ h1, h2, h3, h4, h5, h6 {
 """, unsafe_allow_html=True)
 
 # =========================
-# 🎨 CONFIGURACIÓN DE PLOTLY PARA MODO OSCURO ADAPTADO
-# =========================
-
-# Crear plantilla personalizada basada en "plotly_dark"
-pio.templates["custom_dark"] = pio.templates["plotly_dark"]
-
-# Ajustar tooltips (hoverlabels)
-pio.templates["custom_dark"].layout.hoverlabel = dict(
-    bgcolor="rgba(30,30,30,0.9)",    # Fondo oscuro semitransparente
-    font=dict(color="#f5f6fa", size=12),
-    bordercolor="rgba(200,200,200,0.2)"
-)
-
-# Actualizar colores de fondo, texto y ejes
-pio.templates["custom_dark"].layout.update(
-    paper_bgcolor="rgba(0,0,0,0)",    # Fondo transparente
-    plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(color="#f5f6fa", size=13),
-    title_font=dict(color="#f5f6fa", size=16),
-    legend=dict(
-        bgcolor="rgba(0,0,0,0)",
-        bordercolor="rgba(255,255,255,0.1)",
-        font=dict(color="#f5f6fa")
-    ),
-
-    hoverlabel=dict(
-        bgcolor="rgba(25,25,25,0.9)",     # fondo del tooltip
-        font=dict(color="#ffffff", size=12),  # texto blanco
-        bordercolor="rgba(255,255,255,0.3)"
-    ),
-    xaxis=dict(
-        color="#f5f6fa",
-        gridcolor="rgba(255,255,255,0.1)",
-        zerolinecolor="rgba(255,255,255,0.2)"
-    ),
-    yaxis=dict(
-        color="#f5f6fa",
-        gridcolor="rgba(255,255,255,0.1)",
-        zerolinecolor="rgba(255,255,255,0.2)"
-    )
-)
-
-# Establecer plantilla por defecto
-pio.templates.default = "custom_dark"
-
-
-# =========================
-# 📁 RUTAS
+# 📁 RUTAS Y CARGA DE DATOS
 # =========================
 BASE_DIR = Path(__file__).parent.parent
-DATA_PATH = BASE_DIR / "data" / "processed" / "jobs_cleaned_cleaned.csv"
+DATA_PATH = BASE_DIR / "data" / "processed" / "jobs_cleaned.csv"
 MODEL_PATH = BASE_DIR / "models" / "salary_predictor.pkl"
 SCALER_PATH = BASE_DIR / "models" / "scaler.pkl"
 METADATA_PATH = BASE_DIR / "models" / "model_metadata.json"
 
-# =========================
-# 📊 CARGA DE DATOS
-# =========================
 @st.cache_data
 def load_data():
     df = pd.read_csv(DATA_PATH)
     df['skills'] = df['skills'].apply(lambda x: ast.literal_eval(x) if pd.notna(x) and x != '[]' else [])
     df['created'] = pd.to_datetime(df['created'], errors='coerce')
 
-    # Limpieza y agrupaciones de ciudades
+    # Simplificar nombres de ciudades
     mapping = {
         "Alcobendas": "Madrid",
         "Boadilla del Monte": "Madrid",
@@ -143,6 +90,8 @@ def load_model():
 
 df, ordered_cities = load_data()
 model, scaler, metadata = load_model()
+
+# Columna de rol disponible
 role_col = 'role_category' if 'role_category' in df.columns else 'role'
 
 # =========================
@@ -181,87 +130,46 @@ if page == "🏠 Overview":
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("📊 Distribución de Roles")
-        role_col = 'role_category' if 'role_category' in df.columns else 'role'
         role_counts = df[role_col].value_counts()
-        fig = px.bar(
-            x=role_counts.values, y=role_counts.index, orientation='h',
-            labels={'x': 'Número de Ofertas', 'y': ''},
-            color=role_counts.values, color_continuous_scale='Blues')
+        fig = px.bar(x=role_counts.values, y=role_counts.index,
+                     orientation='h', color=role_counts.values,
+                     color_continuous_scale='Blues')
         st.plotly_chart(fig, use_container_width=True)
-        fig.update_traces(
-            hoverlabel=dict(
-                bgcolor="rgba(20,20,20,0.95)",  # fondo oscuro
-                font_color="#ffffff",            # texto blanco
-                font_size=12,
-                bordercolor="rgba(255,255,255,0.3)"
-            )
-        )
-
     with col2:
         st.subheader("🏙️ Top 10 Ciudades")
         city_counts = df['city'].value_counts().head(10)
         fig = px.bar(x=city_counts.index, y=city_counts.values,
-                     color=city_counts.values, color_continuous_scale='Viridis')
+                     color=city_counts.values,
+                     color_continuous_scale='Viridis')
         st.plotly_chart(fig, use_container_width=True)
-        fig.update_traces(
-            hoverlabel=dict(
-                bgcolor="rgba(20,20,20,0.95)",  # fondo oscuro
-                font_color="#ffffff",            # texto blanco
-                font_size=12,
-                bordercolor="rgba(255,255,255,0.3)"
-            )
-        )
+
     if 'created' in df.columns:
         st.subheader("📈 Evolución Temporal de Ofertas")
         df_temporal = df.set_index('created').resample('M').size()
         fig = px.line(x=df_temporal.index, y=df_temporal.values,
                       labels={'x': 'Fecha', 'y': 'Número de Ofertas'},
                       markers=True)
-        fig.update_traces(line_color='#3498db', line_width=3)
         st.plotly_chart(fig, use_container_width=True)
-        fig.update_traces(
-            hoverlabel=dict(
-                bgcolor="rgba(20,20,20,0.95)",  # fondo oscuro
-                font_color="#ffffff",            # texto blanco
-                font_size=12,
-                bordercolor="rgba(255,255,255,0.3)"
-            )
-        )
+
 # =========================
 # 💼 ANÁLISIS DE ROLES
 # =========================
 elif page == "💼 Análisis de Roles":
     st.title("💼 Análisis de Roles y Experiencia")
-    role_col = 'role_category' if 'role_category' in df.columns else 'role'
-
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("📊 Distribución por Nivel")
         if 'seniority' in df.columns:
-            fig = px.pie(df, names='seniority', color_discrete_sequence=px.colors.qualitative.Set2)
+            fig = px.pie(df, names='seniority',
+                         color_discrete_sequence=px.colors.qualitative.Set2)
             st.plotly_chart(fig, use_container_width=True)
-        fig.update_traces(
-            hoverlabel=dict(
-                bgcolor="rgba(20,20,20,0.95)",  # fondo oscuro
-                font_color="#000000",            # texto blanco
-                font_size=12,
-                bordercolor="rgba(255,255,255,0.3)"
-            )
-        )
     with col2:
         st.subheader("💼 Roles por Nivel")
         if 'seniority' in df.columns:
             role_sen = pd.crosstab(df[role_col], df['seniority'])
-            fig = px.bar(role_sen, barmode='stack')
+            fig = px.bar(role_sen, barmode='stack',
+                         color_discrete_sequence=px.colors.qualitative.Pastel)
             st.plotly_chart(fig, use_container_width=True)
-        fig.update_traces(
-            hoverlabel=dict(
-                bgcolor="rgba(20,20,20,0.95)",  # fondo oscuro
-                font_color="#ffffff",            # texto blanco
-                font_size=12,
-                bordercolor="rgba(255,255,255,0.3)"
-            )
-        )
 
     st.markdown("### 📋 Tabla Detallada por Rol")
     if 'salary_avg' in df.columns:
@@ -290,27 +198,12 @@ elif page == "🗺️ Análisis Geográfico":
         st.subheader("💼 Roles")
         fig = px.pie(df_city, names=role_col)
         st.plotly_chart(fig, use_container_width=True)
-        fig.update_traces(
-            hoverlabel=dict(
-                bgcolor="rgba(20,20,20,0.95)",  # fondo oscuro
-                font_color="#ffffff",            # texto blanco
-                font_size=12,
-                bordercolor="rgba(255,255,255,0.3)"
-            )
-        )
     with col2:
         st.subheader("🏢 Top Empresas")
         top_comp = df_city['company'].value_counts().head(10)
         fig = px.bar(x=top_comp.values, y=top_comp.index, orientation='h')
         st.plotly_chart(fig, use_container_width=True)
-        fig.update_traces(
-            hoverlabel=dict(
-                bgcolor="rgba(20,20,20,0.95)",  # fondo oscuro
-                font_color="#ffffff",            # texto blanco
-                font_size=12,
-                bordercolor="rgba(255,255,255,0.3)"
-            )
-        )
+
 # =========================
 # 🔥 SKILLS DEMANDADAS
 # =========================
@@ -323,14 +216,6 @@ elif page == "🔥 Skills Demandadas":
     fig = px.bar(x=list(top_sk.values()), y=list(top_sk.keys()), orientation='h',
                  color=list(top_sk.values()), color_continuous_scale='Reds')
     st.plotly_chart(fig, use_container_width=True)
-    fig.update_traces(
-        hoverlabel=dict(
-            bgcolor="rgba(20,20,20,0.95)",  # fondo oscuro
-            font_color="#ffffff",            # texto blanco
-            font_size=12,
-            bordercolor="rgba(255,255,255,0.3)"
-        )
-    )
 
 # =========================
 # 💰 ANÁLISIS SALARIAL
@@ -347,14 +232,7 @@ elif page == "💰 Análisis Salarial":
     fig = px.histogram(df_sal, x='salary_avg', nbins=25)
     fig.add_vline(x=df_sal['salary_avg'].mean(), line_dash="dash", line_color="red")
     st.plotly_chart(fig, use_container_width=True)
-    fig.update_traces(
-        hoverlabel=dict(
-            bgcolor="rgba(20,20,20,0.95)",  # fondo oscuro
-            font_color="#ffffff",            # texto blanco
-            font_size=12,
-            bordercolor="rgba(255,255,255,0.3)"
-        )
-    )
+
 # =========================
 # 🤖 IA/ML TRENDS
 # =========================
@@ -367,14 +245,6 @@ elif page == "🤖 IA/ML Trends":
     fig = px.bar(x=['IA/ML','Otros'], y=[ai_jobs['salary_avg'].mean(), other_jobs['salary_avg'].mean()],
                  labels={'x':'Categoría','y':'Salario medio (€)'})
     st.plotly_chart(fig, use_container_width=True)
-    fig.update_traces(
-        hoverlabel=dict(
-            bgcolor="rgba(20,20,20,0.95)",  # fondo oscuro
-            font_color="#ffffff",            # texto blanco
-            font_size=12,
-            bordercolor="rgba(255,255,255,0.3)"
-        )
-    )
 
 # =========================
 # 🔮 PREDICTOR DE SALARIOS
@@ -413,4 +283,4 @@ elif page == "🔮 Predictor de Salarios":
 # 📜 FOOTER
 # =========================
 st.markdown("---")
-st.markdown("<div style='text-align:center;color:#888;'>📊 Dashboard del Mercado Laboral de Data Science en España · Datos via Adzuna API</div>", unsafe_allow_html=True)
+st.markdown("<div style='text-align:center;color:#888;'>📊 Dashboard del Mercado Laboral de Data Science en España · Datos vía Adzuna API</div>", unsafe_allow_html=True)
