@@ -13,32 +13,26 @@ import ast
 import joblib
 import json
 
-# === Configuración global de Plotly para modo oscuro/claro ===
+# === Configuración de Plotly para modo oscuro adaptado ===
 import plotly.io as pio
 
-# Detectar modo actual de Streamlit (oscuro o claro)
-from streamlit import runtime
-try:
-    theme = st.get_option("theme.base")
-except:
-    theme = "light"
+pio.templates["custom_dark"] = pio.templates["plotly_dark"]
 
-if theme == "dark":
-    pio.templates.default = "plotly_dark"
-else:
-    pio.templates.default = "plotly_white"
+pio.templates["custom_dark"].layout.update(
+    paper_bgcolor="rgba(0,0,0,0)",    # fondo transparente
+    plot_bgcolor="rgba(0,0,0,0)",
+    font=dict(color="#f5f6fa", size=13),
+    title_font=dict(color="#f5f6fa", size=16),
+    legend=dict(
+        bgcolor="rgba(0,0,0,0)",
+        bordercolor="rgba(255,255,255,0.1)",
+        font=dict(color="#f5f6fa")
+    ),
+    xaxis=dict(color="#f5f6fa", gridcolor="rgba(255,255,255,0.1)"),
+    yaxis=dict(color="#f5f6fa", gridcolor="rgba(255,255,255,0.1)")
+)
 
-# Personalización estética global
-pio.templates["plotly_dark"].layout.update(
-    paper_bgcolor="rgba(0,0,0,0)",
-    plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(color="#f0f2f6", size=13)
-)
-pio.templates["plotly_white"].layout.update(
-    paper_bgcolor="rgba(0,0,0,0)",
-    plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(color="#262730", size=13)
-)
+pio.templates.default = "custom_dark"
 
 
 # =========================
