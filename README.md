@@ -32,15 +32,18 @@ data-science-job-market-spain/
 │
 ├── app/
 │ └── streamlit_dashboard.py # Dashboard interactivo
+
 │
 ├── data/
 │ ├── raw/ # Datos sin procesar
 │ └── processed/ # Datos limpios (jobs_cleaned_cleaned.csv)
+
 │
 ├── models/
 │ ├── salary_predictor.pkl
 │ ├── scaler.pkl
 │ └── model_metadata.json
+
 │
 ├── src/
 │ ├── data_collection.py # Extracción desde Adzuna API
@@ -48,10 +51,13 @@ data-science-job-market-spain/
 │ ├── feature_engineering.py # Ingeniería de variables
 │ ├── model.py # Entrenamiento y evaluación del modelo
 │ └── fix_locations.py # Limpieza avanzada de ubicaciones
+
 │
 ├── images/ # Gráficos generados y capturas
+
 │
 ├── requirements.txt
+
 └── README.md
 
 
