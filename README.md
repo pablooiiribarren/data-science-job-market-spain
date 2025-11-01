@@ -1,4 +1,9 @@
 # 📊 Análisis del Mercado Laboral de Data Science en España (2025)
+## 👨‍💻 Autor
+
+**Pablo Iriibarren**  
+💼 [LinkedIn](https://www.linkedin.com/in/pablo-iribarren-muru-93b547269) 
+✉️ [Email me](mailto:pabloiribarren2003@gmail.com) 
 
 > Proyecto completo de análisis, modelado y visualización del mercado laboral en el sector **Data Science / IA / Machine Learning** en España.  
 Incluye scraping de ofertas reales, análisis exploratorio, modelado predictivo y dashboard interactivo con Streamlit.
