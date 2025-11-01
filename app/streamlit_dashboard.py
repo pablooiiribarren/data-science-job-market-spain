@@ -63,7 +63,7 @@ pio.templates["custom_dark"].layout.hoverlabel = dict(
 pio.templates["custom_dark"].layout.update(
     paper_bgcolor="rgba(0,0,0,0)",    # Fondo transparente
     plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(color="#f5f6fa", size=13),
+    font=dict(color="#000000", size=13),
     title_font=dict(color="#f5f6fa", size=16),
     legend=dict(
         bgcolor="rgba(0,0,0,0)",
