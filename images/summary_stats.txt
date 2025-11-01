@@ -1,0 +1,44 @@
+======================================================================
+RESUMEN ESTADÍSTICO - MERCADO LABORAL DATA SCIENCE ESPAÑA
+======================================================================
+
+📊 DATOS GENERALES:
+   • Total ofertas: 2056
+   • Ciudades: 72
+   • Empresas: 849
+   • Ofertas con salario: 781 (38.0%)
+
+💰 SALARIOS:
+   • Promedio: 84,577€
+   • Mediana: 80,000€
+   • Mínimo: 19,500€
+   • Máximo: 150,000€
+
+💼 TOP 5 ROLES:
+   1. Data/ML Engineer: 544 (26.5%)
+   2. Data Scientist: 430 (20.9%)
+   3. Data Analyst: 348 (16.9%)
+   4. AI Specialist: 304 (14.8%)
+   5. Otros: 268 (13.0%)
+
+🏙️ TOP 5 CIUDADES:
+   1. España: 703
+   2. Madrid: 598
+   3. Barcelona: 511
+   4. Málaga: 59
+   5. Valencia: 18
+
+🔥 TOP 10 SKILLS:
+   1. Python: 72 (3.5%)
+   2. Azure: 69 (3.4%)
+   3. SQL: 54 (2.6%)
+   4. AWS: 38 (1.8%)
+   5. Spark: 30 (1.5%)
+   6. Power BI: 25 (1.2%)
+   7. R: 19 (0.9%)
+   8. GCP: 18 (0.9%)
+   9. Scala: 17 (0.8%)
+   10. Airflow: 10 (0.5%)
+
+🤖 IA/ML:
+   • Ofertas IA/ML: 1256 (61.1%)
