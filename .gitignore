@@ -10,7 +10,7 @@ ENV/
 # Data files
 data/raw/*.csv
 data/raw/*.json
-data/processed/*.csv
+#data/processed/*.csv
 *.db
 
 # Python
