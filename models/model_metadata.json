@@ -31,22 +31,22 @@
     "role_Data/ML Engineer",
     "role_Machine Learning",
     "role_Otros",
+    "city_Alcobendas",
     "city_Barcelona",
     "city_Bilbao",
-    "city_Espa\u00f1a",
-    "city_Ibiza",
     "city_Madrid",
     "city_Marbella",
     "city_M\u00e1laga",
     "city_Otras",
+    "city_Otras ciudades",
     "city_Pozuelo de Alarc\u00f3n",
-    "city_San Sebasti\u00e1n",
+    "city_Remoto/Sin especificar",
     "city_Valencia"
   ],
   "metrics": {
-    "mae": 9650.423387525721,
-    "rmse": 14940.034669891113,
-    "r2": 0.020551818736061156
+    "mae": 9733.766110940976,
+    "rmse": 15033.887519963097,
+    "r2": 0.008207438383011412
   },
   "skill_columns": [
     "skill_Python",
@@ -70,5 +70,5 @@
     "skill_PyTorch",
     "skill_Docker"
   ],
-  "trained_on": "2025-11-01T09:50:01.689603"
+  "trained_on": "2025-11-01T11:20:29.303033"
 }

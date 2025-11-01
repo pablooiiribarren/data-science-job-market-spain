@@ -19,6 +19,19 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import warnings
 warnings.filterwarnings('ignore')
 
+import wandb
+
+# Inicializar el proyecto (se creará automáticamente en tu cuenta W&B)
+wandb.init(
+    project="data-science-job-market-es",
+    config={
+        "model_version": "1.0",
+        "framework": "scikit-learn",
+        "dataset": "jobs_cleaned.csv",
+        "author": "Pablo"
+    }
+)
+
 # Detectar carpeta raíz
 if Path("data").exists():
     BASE_DIR = Path(".")
@@ -192,10 +205,22 @@ class SalaryPredictor:
             print(f"   • MAE: {mae:,.0f}€")
             print(f"   • RMSE: {rmse:,.0f}€")
             print(f"   • R²: {r2:.3f}")
+
+        # Loguear métricas en W&B
+        wandb.log({
+            "model": type(model).__name__,
+            "MAE": mae,
+            "RMSE": rmse,
+            "R2": r2,
+            "features": len(X.columns),
+            "samples": len(X),
+        })
         
         # Seleccionar mejor modelo (por R²)
         best_model_name = max(results, key=lambda x: results[x]['r2'])
         self.model = results[best_model_name]['model']
+
+        wandb.finish()
         
         print("\n" + "=" * 60)
         print(f"✅ Mejor modelo: {best_model_name}")

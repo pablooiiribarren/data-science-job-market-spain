@@ -1,0 +1,28 @@
+📊 Dataset cargado: 2056 ofertas
+
+===========🎯 ENTRENAMIENTO DEL MODELO PREDICTIVO ===========
+
+🔧 Preparando features...
+   • Ofertas con salario: 781
+   • Top 20 skills como features
+   • Total features: 41
+   • Samples: 781
+   • Verificación: Todas las columnas numéricas ✓
+
+🤖 Entrenando modelos...
+============================================================
+
+📊 Random Forest:
+   • MAE: 8,759€
+   • RMSE: 15,150€
+   • R²: -0.007
+
+📊 Gradient Boosting:
+   • MAE: 8,546€
+   • RMSE: 15,546€
+   • R²: -0.061
+
+📊 Ridge Regression:
+   • MAE: 9,734€
+   • RMSE: 15,034€
+   • R²: 0.008

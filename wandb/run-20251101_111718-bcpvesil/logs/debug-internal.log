@@ -1,0 +1,11 @@
+{"time":"2025-11-01T11:17:20.5436821+01:00","level":"INFO","msg":"stream: starting","core version":"0.22.3"}
+{"time":"2025-11-01T11:17:25.1223754+01:00","level":"INFO","msg":"stream: created new stream","id":"bcpvesil"}
+{"time":"2025-11-01T11:17:25.1223754+01:00","level":"INFO","msg":"handler: started","stream_id":"bcpvesil"}
+{"time":"2025-11-01T11:17:25.1236086+01:00","level":"INFO","msg":"stream: started","id":"bcpvesil"}
+{"time":"2025-11-01T11:17:25.1236086+01:00","level":"INFO","msg":"writer: started","stream_id":"bcpvesil"}
+{"time":"2025-11-01T11:17:25.1241509+01:00","level":"INFO","msg":"sender: started","stream_id":"bcpvesil"}
+{"time":"2025-11-01T11:17:25.8190412+01:00","level":"INFO","msg":"stream: closing","id":"bcpvesil"}
+{"time":"2025-11-01T11:17:26.4819+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-11-01T11:17:26.7950208+01:00","level":"INFO","msg":"handler: closed","stream_id":"bcpvesil"}
+{"time":"2025-11-01T11:17:26.7960441+01:00","level":"INFO","msg":"sender: closed","stream_id":"bcpvesil"}
+{"time":"2025-11-01T11:17:26.7960441+01:00","level":"INFO","msg":"stream: closed","id":"bcpvesil"}
