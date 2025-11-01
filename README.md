@@ -46,6 +46,7 @@ data-science-job-market-spain/
 ├── requirements.txt
 ├── .gitignore
 └── README.md
+```
 ---
 
 ## ⚙️ Tecnologías y Librerías
