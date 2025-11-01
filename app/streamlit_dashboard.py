@@ -13,13 +13,55 @@ import ast
 import joblib
 import json
 
-# === Configuración de Plotly para modo oscuro adaptado ===
+# =========================
+# ⚙️ CONFIGURACIÓN DE LA PÁGINA
+# =========================
+import streamlit as st
 import plotly.io as pio
 
+st.set_page_config(
+    page_title="Mercado Laboral Data Science España",
+    page_icon="📊",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# =========================
+# 🎨 CSS PERSONALIZADO (Streamlit)
+# =========================
+st.markdown("""
+<style>
+.main { padding: 0rem 1rem; }
+div[data-testid="stMetric"] {
+    background-color: rgba(240, 242, 246, 0.1);
+    border: 1px solid rgba(250, 250, 250, 0.1);
+    border-radius: 8px;
+    padding: 8px;
+    color: inherit;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color);
+}
+</style>
+""", unsafe_allow_html=True)
+
+# =========================
+# 🎨 CONFIGURACIÓN DE PLOTLY PARA MODO OSCURO ADAPTADO
+# =========================
+
+# Crear plantilla personalizada basada en "plotly_dark"
 pio.templates["custom_dark"] = pio.templates["plotly_dark"]
 
+# Ajustar tooltips (hoverlabels)
+pio.templates["custom_dark"].layout.hoverlabel = dict(
+    bgcolor="rgba(30,30,30,0.9)",    # Fondo oscuro semitransparente
+    font=dict(color="#f5f6fa", size=12),
+    bordercolor="rgba(200,200,200,0.2)"
+)
+
+# Actualizar colores de fondo, texto y ejes
 pio.templates["custom_dark"].layout.update(
-    paper_bgcolor="rgba(0,0,0,0)",    # fondo transparente
+    paper_bgcolor="rgba(0,0,0,0)",    # Fondo transparente
     plot_bgcolor="rgba(0,0,0,0)",
     font=dict(color="#f5f6fa", size=13),
     title_font=dict(color="#f5f6fa", size=16),
@@ -32,35 +74,9 @@ pio.templates["custom_dark"].layout.update(
     yaxis=dict(color="#f5f6fa", gridcolor="rgba(255,255,255,0.1)")
 )
 
+# Establecer plantilla por defecto
 pio.templates.default = "custom_dark"
 
-
-# =========================
-# ⚙️ CONFIGURACIÓN DE LA PÁGINA
-# =========================
-st.set_page_config(
-    page_title="Mercado Laboral Data Science España",
-    page_icon="📊",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# =========================
-# 🎨 CSS PERSONALIZADO
-# =========================
-st.markdown("""
-<style>
-.main { padding: 0rem 1rem; }
-div[data-testid="stMetric"] {
-    background-color: rgba(240, 242, 246, 0.1);
-    border: 1px solid rgba(250, 250, 250, 0.1);
-    border-radius: 8px;
-    padding: 8px;
-    color: inherit;
-}
-h1, h2, h3, h4, h5, h6 { color: var(--text-color); }
-</style>
-""", unsafe_allow_html=True)
 
 # =========================
 # 📁 RUTAS
