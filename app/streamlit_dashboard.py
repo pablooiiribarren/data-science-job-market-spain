@@ -30,9 +30,24 @@ st.set_page_config(
 # =========================
 st.markdown("""
     <style>
-    .main { padding: 0rem 1rem; }
-    .stMetric { background-color: #f0f2f6; padding: 10px; border-radius: 5px; }
-    h1 { color: #1f77b4; }
+    .main {
+        padding: 0rem 1rem;
+        color: inherit;
+        background-color: transparent;
+    }
+    [data-testid="stMetricValue"] {
+        color: var(--text-color);
+    }
+    div[data-testid="stMetric"] {
+        background-color: rgba(240, 242, 246, 0.1);
+        border: 1px solid rgba(250, 250, 250, 0.1);
+        border-radius: 8px;
+        padding: 8px;
+        color: inherit;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--text-color);
+    }
     </style>
 """, unsafe_allow_html=True)
 

@@ -7,7 +7,7 @@ Incluye scraping de ofertas reales, análisis exploratorio, modelado predictivo 
 
 ## 🚀 Demo del Proyecto
 
-🔗 **[Ver Dashboard en Streamlit Cloud](https://pabloramos-ds-job-market.streamlit.app/)** *(ejemplo de enlace)*  
+🔗 **[Ver Dashboard en Streamlit Cloud](https://data-science-job-market-spain-pablooiiribarren.streamlit.app/)**
 📈 **[Ver experimentos en Weights & Biases](https://wandb.ai/paulsbusiness1111/data-science-job-market-es)**
 
 ---
@@ -54,42 +54,47 @@ data-science-job-market-spain/
 
 ## ⚙️ Tecnologías y Librerías
 
-| Tipo | Herramientas |
-|------|---------------|
-| 📦 Extracción de datos | Adzuna API, requests |
-| 🧹 Limpieza / EDA | pandas, numpy, matplotlib, seaborn |
-| 🤖 Modelado | scikit-learn (Ridge, RandomForest, GradientBoosting) |
-| 🧠 Seguimiento de experimentos | Weights & Biases (wandb) |
-| 📊 Dashboard | Streamlit, Plotly |
-| 💾 Serialización | joblib, json |
+| Categoría | Librerías |
+|------------|------------|
+| 📦 Extracción de datos | `requests`, `beautifulsoup4`, `selenium` |
+| 🧹 Limpieza / EDA | `pandas`, `numpy` |
+| 🤖 Modelado | `scikit-learn`, `xgboost` |
+| 🧠 Seguimiento de experimentos | `wandb` |
+| 📊 Visualización | `plotly`, `matplotlib`, `seaborn`, `wordcloud` |
+| 🖥 Dashboard | `streamlit` |
+| 🧰 Utilidades | `tqdm`, `dotenv`, `nltk` |
 
 ---
 
 ## 🧩 Pipeline del Proyecto
 
 1. **Recolección de Datos:**  
-   Scraping de más de **2 000 ofertas reales** del portal Adzuna (España).
+   Scraping de más de **2 000 ofertas reales** de empleo de la API pública de Adzuna (España).
 
 2. **Limpieza e Ingeniería de Features:**  
-   - Normalización de ciudades y roles.  
-   - Extracción de skills más frecuentes.  
+   - Normalización de nombres de ciudades y roles.  
+   - Extracción de las 20 skills más frecuentes.  
    - Cálculo del salario medio (`salary_avg`).
 
 3. **Análisis Exploratorio (EDA):**  
-   Visualizaciones sobre demanda, localización y habilidades clave.
+   Visualizaciones sobre demanda, localización y habilidades clave en el mercado.
 
 4. **Modelado Predictivo:**  
-   Comparación de Ridge, RandomForest y Gradient Boosting →  
-   ✅ **Mejor modelo:** Ridge Regression (R² ≈ 0.008, MAE ≈ 9 734 €).
+   Comparación de modelos:
+   - Ridge Regression  
+   - Random Forest  
+   - Gradient Boosting  
+   ✅ Mejor modelo: **Ridge Regression**  
+   *(R² = 0.008, MAE ≈ 9 734 €)*
 
 5. **Dashboard Interactivo:**  
    Navegación por pestañas:
-   - 🏠 Overview general  
-   - 🗺️ Análisis geográfico  
-   - 🔥 Skills demandadas  
-   - 💰 Salarios  
-   - 🤖 IA/ML Trends  
-   - 🔮 Predictor de salarios
+   - 🏠 **Overview general**  
+   - 🗺️ **Análisis geográfico**  
+   - 🔥 **Skills demandadas**  
+   - 💰 **Salarios**  
+   - 🤖 **Tendencias IA/ML**  
+   - 🔮 **Predictor de salarios**
 
 ---
 
@@ -101,7 +106,7 @@ data-science-job-market-spain/
 | 💼 Roles más demandados | Data Analyst, Data Engineer, Data Scientist |
 | 🔥 Skills top | Python, SQL, Machine Learning, AWS, Power BI |
 | 💰 Salario medio estimado | ~42 000 €/año |
-| 🤖 % de ofertas IA/ML | 25 % del total aproximado |
+| 🤖 % de ofertas IA/ML | 25 % aprox. del total |
 
 ---
 
