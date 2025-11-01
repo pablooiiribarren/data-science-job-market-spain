@@ -15,7 +15,9 @@ from collections import Counter
 import joblib
 import json
 
-# Configuración de la página
+# =========================
+# ⚙️ CONFIGURACIÓN DE LA PÁGINA
+# =========================
 st.set_page_config(
     page_title="Mercado Laboral Data Science España",
     page_icon="📊",
@@ -23,44 +25,64 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS personalizado
+# =========================
+# 🎨 CSS PERSONALIZADO
+# =========================
 st.markdown("""
     <style>
-    .main {
-        padding: 0rem 1rem;
-    }
-    .stMetric {
-        background-color: #f0f2f6;
-        padding: 10px;
-        border-radius: 5px;
-    }
-    h1 {
-        color: #1f77b4;
-    }
+    .main { padding: 0rem 1rem; }
+    .stMetric { background-color: #f0f2f6; padding: 10px; border-radius: 5px; }
+    h1 { color: #1f77b4; }
     </style>
 """, unsafe_allow_html=True)
 
-# Rutas
+# =========================
+# 📁 RUTAS
+# =========================
 BASE_DIR = Path(__file__).parent.parent
-DATA_PATH = BASE_DIR / "data" / "processed" / "jobs_cleaned.csv"
+DATA_PATH = BASE_DIR / "data" / "processed" / "jobs_cleaned_cleaned.csv"  # 👈 CSV limpio
 MODEL_PATH = BASE_DIR / "models" / "salary_predictor.pkl"
 SCALER_PATH = BASE_DIR / "models" / "scaler.pkl"
 METADATA_PATH = BASE_DIR / "models" / "model_metadata.json"
 
-# Cargar datos
+# =========================
+# 📊 CARGA DE DATOS
+# =========================
 @st.cache_data
 def load_data():
-    """Carga y cachea los datos"""
     df = pd.read_csv(DATA_PATH)
     df['skills'] = df['skills'].apply(
         lambda x: ast.literal_eval(x) if pd.notna(x) and x != '[]' else []
     )
     df['created'] = pd.to_datetime(df['created'])
-    return df
+    
+    # Normalizar ciudades
+    df['city'] = df['city'].str.strip()
+    mapping = {
+        "Alcobendas": "Madrid",
+        "Boadilla del Monte": "Madrid",
+        "Sant Adrià de Besòs": "Barcelona",
+        "Sant Cugat del Vallès": "Barcelona",
+        "Esplugues de Llobregat": "Barcelona"
+    }
+    df['city'] = df['city'].replace(mapping)
+    df['city'] = df['city'].replace({"Remoto/Sin especificar": "Remoto o sin ubicación"})
+    
+    # Eliminar categoría genérica
+    df = df[df['city'] != "Otras ciudades"]
+    
+    # Ordenar por número de ofertas
+    city_counts = df['city'].value_counts()
+    ordered_cities = city_counts.index.tolist()
+    if "Remoto o sin ubicación" in ordered_cities:
+        ordered_cities.remove("Remoto o sin ubicación")
+        ordered_cities.append("Remoto o sin ubicación")
+    
+    df['city'] = pd.Categorical(df['city'], categories=ordered_cities, ordered=True)
+    return df, ordered_cities
 
 @st.cache_resource
 def load_model():
-    """Carga el modelo entrenado"""
     try:
         model = joblib.load(MODEL_PATH)
         scaler = joblib.load(SCALER_PATH)
@@ -70,11 +92,13 @@ def load_model():
     except:
         return None, None, None
 
-# Cargar datos
-df = load_data()
+# Cargar datos y modelo
+df, ordered_cities = load_data()
 model, scaler, metadata = load_model()
 
-# Sidebar
+# =========================
+# 🧭 SIDEBAR
+# =========================
 st.sidebar.title("📊 Navegación")
 page = st.sidebar.radio(
     "Selecciona una página:",
@@ -89,7 +113,9 @@ st.sidebar.metric("Total Ofertas", f"{len(df):,}")
 st.sidebar.metric("Ciudades", df['city'].nunique())
 st.sidebar.metric("Empresas", df['company'].nunique())
 
-# === PÁGINA 1: OVERVIEW ===
+# =========================
+# 🏠 PÁGINA 1: OVERVIEW
+# =========================
 if page == "🏠 Overview":
     st.title("📊 Mercado Laboral de Data Science en España")
     st.markdown("### Análisis Completo del Sector en 2024-2025")
@@ -98,40 +124,23 @@ if page == "🏠 Overview":
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        st.metric(
-            label="Total Ofertas",
-            value=f"{len(df):,}",
-            delta=f"{df['is_ai_related'].sum()} IA/ML"
-        )
+        st.metric("Total Ofertas", f"{len(df):,}", f"{df['is_ai_related'].sum()} IA/ML")
     
     with col2:
         avg_salary = df['salary_avg'].mean()
-        st.metric(
-            label="Salario Promedio",
-            value=f"{avg_salary:,.0f}€" if not pd.isna(avg_salary) else "N/A",
-            delta=f"{df['salary_avg'].notna().sum()} con salario"
-        )
+        st.metric("Salario Promedio", f"{avg_salary:,.0f}€", f"{df['salary_avg'].notna().sum()} con salario")
     
     with col3:
-        st.metric(
-            label="Skills Promedio",
-            value=f"{df['num_skills'].mean():.1f}",
-            delta="por oferta"
-        )
+        st.metric("Skills Promedio", f"{df['num_skills'].mean():.1f}", "por oferta")
     
     with col4:
         ai_percentage = (df['is_ai_related'].sum() / len(df)) * 100
-        st.metric(
-            label="Ofertas IA/ML",
-            value=f"{ai_percentage:.1f}%",
-            delta=f"{df['is_ai_related'].sum()} ofertas"
-        )
+        st.metric("Ofertas IA/ML", f"{ai_percentage:.1f}%", f"{df['is_ai_related'].sum()} ofertas")
     
     st.markdown("---")
     
     # Gráficos principales
     col1, col2 = st.columns(2)
-    
     with col1:
         st.subheader("📊 Distribución de Roles")
         role_counts = df['role_category'].value_counts()
@@ -171,80 +180,32 @@ if page == "🏠 Overview":
     fig.update_traces(line_color='#3498db', line_width=3)
     st.plotly_chart(fig, use_container_width=True)
 
-# === PÁGINA 2: ANÁLISIS DE ROLES ===
-elif page == "💼 Análisis de Roles":
-    st.title("💼 Análisis de Roles y Experiencia")
-    
-    # Distribución por nivel
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("📊 Distribución por Nivel de Experiencia")
-        seniority_counts = df['seniority'].value_counts()
-        fig = px.pie(
-            values=seniority_counts.values,
-            names=seniority_counts.index,
-            color_discrete_sequence=px.colors.qualitative.Set2
-        )
-        fig.update_traces(textposition='inside', textinfo='percent+label')
-        st.plotly_chart(fig, use_container_width=True)
-    
-    with col2:
-        st.subheader("💼 Roles por Nivel")
-        role_seniority = pd.crosstab(df['role_category'], df['seniority'])
-        fig = px.bar(
-            role_seniority,
-            barmode='stack',
-            labels={'value': 'Ofertas', 'variable': 'Nivel'},
-            color_discrete_sequence=px.colors.qualitative.Pastel
-        )
-        fig.update_layout(xaxis_tickangle=-45)
-        st.plotly_chart(fig, use_container_width=True)
-    
-    # Tabla detallada
-    st.subheader("📋 Tabla Detallada por Rol")
-    role_stats = df.groupby('role_category').agg({
-        'id': 'count',
-        'salary_avg': 'mean',
-        'num_skills': 'mean',
-        'is_ai_related': 'sum'
-    }).round(0)
-    role_stats.columns = ['Total Ofertas', 'Salario Promedio (€)', 'Skills Promedio', 'Ofertas IA/ML']
-    st.dataframe(role_stats.sort_values('Total Ofertas', ascending=False), use_container_width=True)
-
-# === PÁGINA 3: ANÁLISIS GEOGRÁFICO ===
+# =========================
+# 🗺️ PÁGINA 3: ANÁLISIS GEOGRÁFICO
+# =========================
 elif page == "🗺️ Análisis Geográfico":
-    st.title("🗺️ Análisis Geográfico")
+    st.title("🗺️ Análisis Geográfico del Mercado")
     
-    # Selector de ciudad
-    cities = ['Todas'] + sorted(df['city'].value_counts().head(15).index.tolist())
-    selected_city = st.selectbox("Selecciona una ciudad:", cities)
+    selected_city = st.selectbox("Selecciona una ciudad:", ["Todas"] + ordered_cities)
+    df_filtered = df if selected_city == "Todas" else df[df['city'] == selected_city]
     
-    if selected_city == 'Todas':
-        df_filtered = df
-    else:
-        df_filtered = df[df['city'] == selected_city]
-    
-    # KPIs de la ciudad
+    # KPIs por ciudad
+    st.markdown("### 📊 Indicadores Clave")
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         st.metric("Ofertas", len(df_filtered))
-    
     with col2:
         avg_sal = df_filtered['salary_avg'].mean()
         st.metric("Salario Medio", f"{avg_sal:,.0f}€" if not pd.isna(avg_sal) else "N/A")
-    
     with col3:
         st.metric("Empresas", df_filtered['company'].nunique())
-    
     with col4:
-        ai_pct = (df_filtered['is_ai_related'].sum() / len(df_filtered) * 100)
+        ai_pct = (df_filtered['is_ai_related'].sum() / len(df_filtered) * 100) if len(df_filtered) > 0 else 0
         st.metric("% IA/ML", f"{ai_pct:.1f}%")
     
     # Gráficos
     col1, col2 = st.columns(2)
-    
     with col1:
         st.subheader("💼 Roles en esta Ubicación")
         role_dist = df_filtered['role_category'].value_counts()
@@ -257,6 +218,7 @@ elif page == "🗺️ Análisis Geográfico":
         fig = px.bar(x=company_dist.values, y=company_dist.index, orientation='h')
         fig.update_layout(yaxis={'categoryorder':'total ascending'})
         st.plotly_chart(fig, use_container_width=True)
+
 
 # === PÁGINA 4: SKILLS ===
 elif page == "🔥 Skills Demandadas":
