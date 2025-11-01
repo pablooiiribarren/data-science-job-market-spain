@@ -25,7 +25,7 @@ Incluye scraping de ofertas reales, análisis exploratorio, modelado predictivo 
 - Crear un **dashboard interactivo** de exploración de datos.
 
 ---
-
+```bash
 ## 🚀 Estructura del Proyecto
 data-science-job-market-spain/
 ├── data/
