@@ -91,6 +91,7 @@ def load_model():
 
 df, ordered_cities = load_data()
 model, scaler, metadata = load_model()
+role_col = 'role_category' if 'role_category' in df.columns else 'role'
 
 # =========================
 # 🧭 SIDEBAR
