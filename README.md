@@ -26,41 +26,26 @@ Incluye scraping de ofertas reales, análisis exploratorio, modelado predictivo 
 
 ---
 
-## 🏗️ Estructura del Proyecto
-
+## 🚀 Estructura del Proyecto
 data-science-job-market-spain/
-│
-├── app/
-│ └── streamlit_dashboard.py # Dashboard interactivo
-
-│
 ├── data/
-│ ├── raw/ # Datos sin procesar
-│ └── processed/ # Datos limpios (jobs_cleaned_cleaned.csv)
-
-│
-├── models/
-│ ├── salary_predictor.pkl
-│ ├── scaler.pkl
-│ └── model_metadata.json
-
-│
+│   ├── raw/              # Datos sin procesar (originales de la API)
+│   ├── processed/        # Datos limpios y listos para análisis
+│   └── sample/           # Datos de ejemplo o prueba
 ├── src/
-│ ├── data_collection.py # Extracción desde Adzuna API
-│ ├── data_cleaning.py # Limpieza y normalización
-│ ├── feature_engineering.py # Ingeniería de variables
-│ ├── model.py # Entrenamiento y evaluación del modelo
-│ └── fix_locations.py # Limpieza avanzada de ubicaciones
-
-│
-├── images/ # Gráficos generados y capturas
-
-│
+│   ├── data_collection.py    # Recolección de datos desde Adzuna API
+│   ├── data_processing.py    # Limpieza y preprocesamiento
+│   ├── skills_extractor.py   # Extracción y análisis de habilidades
+│   ├── model.py              # Entrenamiento del modelo predictivo
+│   └── visualization.py      # Visualizaciones con Plotly
+├── app/
+│   └── streamlit_dashboard.py   # Dashboard interactivo
+├── models/                 # Modelos entrenados (.pkl, .json)
+├── notebooks/              # Análisis exploratorios (Jupyter)
+├── images/                 # Gráficos y capturas para el README
 ├── requirements.txt
-
+├── .gitignore
 └── README.md
-
-
 ---
 
 ## ⚙️ Tecnologías y Librerías
