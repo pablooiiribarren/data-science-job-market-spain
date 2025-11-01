@@ -243,7 +243,7 @@ elif page == "💼 Análisis de Roles":
         fig.update_traces(
             hoverlabel=dict(
                 bgcolor="rgba(20,20,20,0.95)",  # fondo oscuro
-                font_color="#ffffff",            # texto blanco
+                font_color="#000000",            # texto blanco
                 font_size=12,
                 bordercolor="rgba(255,255,255,0.3)"
             )
