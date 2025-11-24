@@ -1,7 +1,7 @@
 # 📊 Análisis del Mercado Laboral de Data Science en España (2025)
 ## 👨‍💻 Autor
 
-**Pablo Iriibarren**  
+**Pablo Iribarren**  
 💼 [LinkedIn](https://www.linkedin.com/in/pablo-iribarren-muru-93b547269) 
 ✉️ [Email me](mailto:pabloiribarren2003@gmail.com) 
 
