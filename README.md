@@ -1,129 +1,135 @@
-# 📊 Análisis del Mercado Laboral de Data Science en España (2025)
-## 👨‍💻 Autor
+# 📊 Data Science Job Market Analysis — Spain (2025)
+
+## 👨‍💻 Author
 
 **Pablo Iribarren**  
-💼 [LinkedIn](https://www.linkedin.com/in/pablo-iribarren-muru-93b547269) 
-✉️ [Email me](mailto:pabloiribarren2003@gmail.com) 
+💼 [LinkedIn](https://www.linkedin.com/in/pablo-iribarren-muru-93b547269)  
+✉️ [Email me](mailto:pabloiribarren2003@gmail.com)
 
-> Proyecto completo de análisis, modelado y visualización del mercado laboral en el sector **Data Science / IA / Machine Learning** en España.  
-Incluye scraping de ofertas reales, análisis exploratorio, modelado predictivo y dashboard interactivo con Streamlit.
-
----
-
-## 🚀 Demo del Proyecto
-
-🔗 **[Ver Dashboard en Streamlit Cloud](https://data-science-job-market-spain-pablooiiribarren.streamlit.app/)**
-📈 **[Ver experimentos en Weights & Biases](https://wandb.ai/paulsbusiness1111/data-science-job-market-es)**
+> End-to-end analysis of the **Data Science / AI / Machine Learning** job market in Spain.  
+> Covers real job listing scraping, exploratory data analysis, salary prediction modelling, 
+> and an interactive Streamlit dashboard.
 
 ---
 
-## 🧠 Objetivos del Proyecto
+## 🚀 Live Demo
 
-- Analizar el estado actual del mercado laboral en **Data Science en España**.  
-- Identificar los **roles, skills y ubicaciones más demandadas**.  
-- Estimar rangos salariales aproximados mediante **modelos predictivos**.  
-- Crear un **dashboard interactivo** de exploración de datos.
+🔗 **[View Dashboard on Streamlit Cloud](https://data-science-job-market-spain-pablooiiribarren.streamlit.app/)**  
+📈 **[View experiments on Weights & Biases](https://wandb.ai/paulsbusiness1111/data-science-job-market-es)**
 
 ---
+
+## 🧠 Project Goals
+
+- Analyse the current state of the **Data Science job market in Spain**
+- Identify the most in-demand **roles, skills and locations**
+- Estimate salary ranges using **predictive models**
+- Build an **interactive dashboard** for data exploration
+
+---
+
+## 🗂️ Project Structure
+
 ```bash
-## 🚀 Estructura del Proyecto
 data-science-job-market-spain/
 ├── data/
-│   ├── raw/              # Datos sin procesar (originales de la API)
-│   ├── processed/        # Datos limpios y listos para análisis
-│   └── sample/           # Datos de ejemplo o prueba
+│   ├── raw/              # Raw data (original from API)
+│   ├── processed/        # Cleaned and analysis-ready data
+│   └── sample/           # Sample or test data
 ├── src/
-│   ├── data_collection.py    # Recolección de datos desde Adzuna API
-│   ├── data_processing.py    # Limpieza y preprocesamiento
-│   ├── skills_extractor.py   # Extracción y análisis de habilidades
-│   ├── model.py              # Entrenamiento del modelo predictivo
-│   └── visualization.py      # Visualizaciones con Plotly
+│   ├── data_collection.py    # Data collection from Adzuna API
+│   ├── data_processing.py    # Cleaning and preprocessing
+│   ├── skills_extractor.py   # Skills extraction and analysis
+│   ├── model.py              # Predictive model training
+│   └── visualization.py      # Plotly visualizations
 ├── app/
-│   └── streamlit_dashboard.py   # Dashboard interactivo
-├── models/                 # Modelos entrenados (.pkl, .json)
-├── notebooks/              # Análisis exploratorios (Jupyter)
-├── images/                 # Gráficos y capturas para el README
+│   └── streamlit_dashboard.py   # Interactive dashboard
+├── models/                 # Trained models (.pkl, .json)
+├── notebooks/              # Exploratory analysis (Jupyter)
+├── images/                 # Charts and screenshots for README
 ├── requirements.txt
 ├── .gitignore
 └── README.md
 ```
+
 ---
 
-## ⚙️ Tecnologías y Librerías
+## ⚙️ Technologies & Libraries
 
-| Categoría | Librerías |
-|------------|------------|
-| 📦 Extracción de datos | `requests`, `beautifulsoup4`, `selenium` |
-| 🧹 Limpieza / EDA | `pandas`, `numpy` |
-| 🤖 Modelado | `scikit-learn`, `xgboost` |
-| 🧠 Seguimiento de experimentos | `wandb` |
-| 📊 Visualización | `plotly`, `matplotlib`, `seaborn`, `wordcloud` |
+| Category | Libraries |
+|----------|-----------|
+| 📦 Data collection | `requests`, `beautifulsoup4`, `selenium` |
+| 🧹 Cleaning / EDA | `pandas`, `numpy` |
+| 🤖 Modelling | `scikit-learn`, `xgboost` |
+| 🧠 Experiment tracking | `wandb` |
+| 📊 Visualisation | `plotly`, `matplotlib`, `seaborn`, `wordcloud` |
 | 🖥 Dashboard | `streamlit` |
-| 🧰 Utilidades | `tqdm`, `dotenv`, `nltk` |
+| 🧰 Utilities | `tqdm`, `dotenv`, `nltk` |
 
 ---
 
-## 🧩 Pipeline del Proyecto
+## 🧩 Project Pipeline
 
-1. **Recolección de Datos:**  
-   Scraping de más de **2 000 ofertas reales** de empleo de la API pública de Adzuna (España).
+1. **Data Collection**  
+   Scraped over **2,000 real job listings** from the public Adzuna API (Spain).
 
-2. **Limpieza e Ingeniería de Features:**  
-   - Normalización de nombres de ciudades y roles.  
-   - Extracción de las 20 skills más frecuentes.  
-   - Cálculo del salario medio (`salary_avg`).
+2. **Cleaning & Feature Engineering**  
+   - Normalisation of city names and job roles  
+   - Extraction of the 20 most frequent skills  
+   - Calculation of average salary (`salary_avg`)
 
-3. **Análisis Exploratorio (EDA):**  
-   Visualizaciones sobre demanda, localización y habilidades clave en el mercado.
+3. **Exploratory Data Analysis (EDA)**  
+   Visualisations covering demand, location distribution and key market skills.
 
-4. **Modelado Predictivo:**  
-   Comparación de modelos:
-   - Ridge Regression  
-   - Random Forest  
+4. **Predictive Modelling**  
+   Model comparison:
+   - Ridge Regression
+   - Random Forest
    - Gradient Boosting  
-   ✅ Mejor modelo: **Ridge Regression**  
-   *(R² = 0.008, MAE ≈ 9 734 €)*
+   ✅ Best model: **Ridge Regression** *(R² = 0.008, MAE ≈ €9,734)*
 
-5. **Dashboard Interactivo:**  
-   Navegación por pestañas:
-   - 🏠 **Overview general**  
-   - 🗺️ **Análisis geográfico**  
-   - 🔥 **Skills demandadas**  
-   - 💰 **Salarios**  
-   - 🤖 **Tendencias IA/ML**  
-   - 🔮 **Predictor de salarios**
-
----
-
-## 📈 Resultados Clave
-
-| Insight | Resultado |
-|----------|------------|
-| 📍 Ciudades con más ofertas | Madrid, Barcelona, Valencia |
-| 💼 Roles más demandados | Data Analyst, Data Engineer, Data Scientist |
-| 🔥 Skills top | Python, SQL, Machine Learning, AWS, Power BI |
-| 💰 Salario medio estimado | ~42 000 €/año |
-| 🤖 % de ofertas IA/ML | 25 % aprox. del total |
+5. **Interactive Dashboard**  
+   Tab-based navigation:
+   - 🏠 **General overview**
+   - 🗺️ **Geographic analysis**
+   - 🔥 **Most demanded skills**
+   - 💰 **Salaries**
+   - 🤖 **AI/ML trends**
+   - 🔮 **Salary predictor**
 
 ---
 
-## ⚙️ Instalación Local
+## 📈 Key Findings
+
+| Insight | Result |
+|---------|--------|
+| 📍 Cities with most listings | Madrid, Barcelona, Valencia |
+| 💼 Most demanded roles | Data Analyst, Data Engineer, Data Scientist |
+| 🔥 Top skills | Python, SQL, Machine Learning, AWS, Power BI |
+| 💰 Estimated average salary | ~€42,000/year |
+| 🤖 AI/ML share of listings | ~25% of total |
+
+---
+
+## ⚙️ Local Setup
 
 ```bash
-# 1️⃣ Clonar el repositorio
-git clone https://github.com/<tu_usuario>/data-science-job-market-spain.git
+# 1️⃣ Clone the repository
+git clone https://github.com/pablooiiribarren/data-science-job-market-spain.git
 cd data-science-job-market-spain
 
-# 2️⃣ Crear entorno virtual
+# 2️⃣ Create virtual environment
 python -m venv venv
-source venv/bin/activate   # o venv\Scripts\activate en Windows
+source venv/bin/activate   # or venv\Scripts\activate on Windows
 
-# 3️⃣ Instalar dependencias
+# 3️⃣ Install dependencies
 pip install -r requirements.txt
 
-# 4️⃣ Ejecutar dashboard
+# 4️⃣ Run dashboard
 streamlit run app/streamlit_dashboard.py
 ```
 
-Proyecto desarrollado como parte de portfolio en Data Science e Inteligencia Artificial (2025).
-Dataset obtenido mediante la API pública de Adzuna.
+---
+
+*Developed as part of a Data Science and AI portfolio project (2025).  
+Dataset obtained via the public Adzuna API.*
